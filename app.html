@@ -3,19 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Weather Application</title>
   </head>
-  <body>
-    <div>
-      <div>
-        <div><p>Enter The City, Know The Weather</p></div>
-        <div>
-          <form>
-            <input type="text" placeholder="Enter The city Name" />
-            <button type="submit">Submit</button>
-          </form>
-        </div>
-      </div>
+  <body class="min-h-screen flex justify-center items-center">
+    <div class="bg-red-50 w-96 flex flex-col items-center gap-4 p-4">
+      <p>Enter The City, Know The Weather</p>
+
+      <form class="flex gap-2">
+        <input
+          type="text"
+          placeholder="Enter The city Name"
+          class="border p-2"
+        />
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2">
+          Submit
+        </button>
+      </form>
+      <div id="display"></div>
     </div>
   </body>
 </html>
