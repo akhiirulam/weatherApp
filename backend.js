@@ -1,45 +1,40 @@
 async function fetchWeather() {
-  const getCity = document.getElementById("city");
+  try {
+    const city = document.getElementById("city").value.trim();
 
-  const city = getCity.value;
+    if (!city) {
+      alert("Please enter a city name");
+      return;
+    }
 
-  const response = await fetch(
-    `http://api.weatherapi.com/v1/current.json?key=96d6132675004181892111830260406&q=${city}&aqi=no`,
-  );
+    const response = await fetch(
+      `https://api.weatherapi.com/v1/current.json?key=96d6132675004181892111830260406&q&q=${city}&aqi=no`,
+    );
 
-  const data = await response.json();
+    const data = await response.json();
 
-  if (data.error) {
-    const display = document.getElementById("display");
-    display.innerHTML = "";
-
-    const weatherData = document.createElement("p");
-
-    weatherData.textContent = "Enter valide city name";
-
-    display.appendChild(weatherData);
-  } else {
     const display = document.getElementById("display");
 
-    display.innerHTML = "";
+    if (data.error) {
+      display.innerHTML = "<p class='text-red-500'>Invalid city name</p>";
+      return;
+    }
 
-    console.log(data);
+    display.innerHTML = `
+      <div class="space-y-2 text-center">
+        <h2 class="text-xl font-bold">${data.location.name}</h2>
+        <p>Country: ${data.location.country}</p>
+        <p>Local Time: ${data.location.localtime}</p>
+        <p>Weather: ${data.current.condition.text}</p>
+        <p>Temperature: ${data.current.temp_c}°C</p>
+        <p>Humidity: ${data.current.humidity}%</p>
+        <p>Wind: ${data.current.wind_kph} km/h</p>
+      </div>
+    `;
+  } catch (error) {
+    document.getElementById("display").innerHTML =
+      "<p class='text-red-500'>Failed to fetch weather data.</p>";
 
-    const country = document.createElement("p");
-    country.textContent = `Country: ${data.location.country}`;
-
-    const time = document.createElement("p");
-    time.textContent = `Time: ${data.location.localtime}`;
-
-    const rain = document.createElement("p");
-    rain.textContent = `Chance of rain: ${data.current.chance_of_rain}%`;
-
-    const condition = document.createElement("p");
-    condition.textContent = `Weather Condition: ${data.current.condition.text}`;
-
-    const temp = document.createElement("p");
-    temp.textContent = `Temperature: ${data.current.temp_c}°C`;
-
-    display.append(country, time, rain, condition, temp);
+    console.error(error);
   }
 }
