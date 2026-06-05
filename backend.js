@@ -22,10 +22,24 @@ async function fetchWeather() {
     const display = document.getElementById("display");
 
     display.innerHTML = "";
-    const weatherData = document.createElement("p");
 
-    weatherData.textContent = `Weather Condition: ${data.current.condition.text}`;
+    console.log(data);
 
-    display.appendChild(weatherData);
+    const country = document.createElement("p");
+    country.textContent = `Country: ${data.location.country}`;
+
+    const time = document.createElement("p");
+    time.textContent = `Time: ${data.location.localtime}`;
+
+    const rain = document.createElement("p");
+    rain.textContent = `Chance of rain: ${data.current.chance_of_rain}%`;
+
+    const condition = document.createElement("p");
+    condition.textContent = `Weather Condition: ${data.current.condition.text}`;
+
+    const temp = document.createElement("p");
+    temp.textContent = `Temperature: ${data.current.temp_c}°C`;
+
+    display.append(country, time, rain, condition, temp);
   }
 }
