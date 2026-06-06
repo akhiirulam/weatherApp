@@ -8,7 +8,7 @@ async function fetchWeather() {
     }
 
     const response = await fetch(
-      `https://api.weatherapi.com/v1/current.json?key=96d6132675004181892111830260406&q=${city}&aqi=no`,
+      `https://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_API_KEY}&q=${city}&aqi=no`,
     );
 
     const data = await response.json();
